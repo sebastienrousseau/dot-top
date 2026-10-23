@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# Copyright (c) 2026 Sebastien Rousseau
+
+version: "2"
+run:
+  timeout: 5m
+linters:
+  default: standard
+  enable:
+    - revive
+    - gosec
+    - errorlint
+    - nilerr
+    - copyloopvar
+    - makezero
+    - noctx
+    - predeclared
+    - unconvert
+    - unparam
+    - misspell
+    - perfsprint
+    - prealloc
+    - goheader
+    # Complexity ceilings (portfolio standard).
+    - gocyclo
+    - gocognit
+    - funlen
+    - nestif
+  settings:
+    gocyclo:
+      min-complexity: 10
+    gocognit:
+      min-complexity: 15
+    funlen:
+      lines: 60
+      statements: -1
+    nestif:
+      min-complexity: 5
+    goheader:
+      template: |-
+        SPDX-License-Identifier: Apache-2.0 OR MIT
+        Copyright (c) 2026 Sebastien Rousseau
+    revive:
+      rules:
+        - name: exported
+        - name: package-comments
+        - name: var-naming
+        - name: indent-error-flow
+        - name: error-return
+        - name: unused-parameter
+  exclusions:
+    rules:
+      # Tests drive the binary and `go list` by design.
+      - path: _test\.go
+        linters: [gosec, noctx]
+formatters:
+  enable:
+    - gofmt
+    - goimports

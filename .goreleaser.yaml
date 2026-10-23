@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# Copyright (c) 2026 Sebastien Rousseau
+
+version: 2
+
+project_name: dot-top
+
+builds:
+  - id: dot-top
+    main: ./cmd/dot-top
+    binary: dot-top
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+
+archives:
+  - id: dot-top
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE-APACHE
+      - LICENSE-MIT
+      - README.md
+      - CHANGELOG.md
+
+checksum:
+  name_template: SHA256SUMS
+  algorithm: sha256
+
+release:
+  name_template: "{{ .ProjectName }} {{ .Version }}"
+
+changelog:
+  disable: true

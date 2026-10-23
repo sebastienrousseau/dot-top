@@ -1,0 +1,50 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# Copyright (c) 2026 Sebastien Rousseau
+#
+# Command names of dot top (ADR-020, manifest v1). The commands, object and
+# alias mirror plugins/top/dot-plugin.toml in the dotfiles repository; keep
+# the two identical until the monorepo copy is retired. `legacy` is the
+# monorepo route and is dropped once this repository ships the domain.
+# The version is the family version (ADR-021) and moves in lockstep.
+schema = "cli/manifest.v1"
+name = "top"
+domain = "top"
+version = "0.2.537"
+license = "Apache-2.0 OR MIT"
+summary = "what the machine and its agents are doing"
+default = "tui"
+legacy = "intelligence"
+platforms = ["darwin-amd64", "darwin-arm64", "linux-amd64", "linux-arm64", "windows-amd64", "windows-arm64"]
+
+[entry]
+binary = "dot-top"
+
+# Reserved by the schema for P2.3 (ADR-016 trust path). Declares the most
+# dot-top will ever need: read process tables and agent transcripts, signal
+# processes owned by the same user, and no network access at all.
+[capabilities]
+read = ["/proc", "~/.claude/projects", "~/.codex/sessions"]
+signal = "same-uid"
+network = false
+
+[[objects]]
+name = "report"
+summary = "usage by model, agent or project"
+default = "show"
+
+[[commands]]
+verb = "measure"
+effect = "read"
+summary = "Sample once and print the result"
+
+[[commands]]
+object = "report"
+verb = "show"
+effect = "read"
+summary = "Usage report"
+
+[[aliases]]
+name = "intelligence"
+target = "top"
+kind = "deprecated"
+until = "0.2.538"

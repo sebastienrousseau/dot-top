@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# Copyright (c) 2026 Sebastien Rousseau
+
+/bin/
+/dist/
+*.test
+*.out
+*.prof
+coverage.*
+.DS_Store

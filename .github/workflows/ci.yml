@@ -51,6 +51,10 @@ jobs:
           CGO_ENABLED: "0"
         run: go build ./...
 
+      # Two builds from clean caches must be bit-for-bit identical.
+      - name: reproducible build
+        run: make repro
+
       # The linter is installed at a fixed version with `go install` rather
       # than through golangci-lint-action, the way the dotfiles dot-ui and
       # cockpit workflows do: the module proxy's checksum database pins it.

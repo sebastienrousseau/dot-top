@@ -10,6 +10,8 @@
 <p align="center">
   <a href="LICENSE-APACHE"><img src="https://img.shields.io/badge/license-Apache--2.0%20OR%20MIT-blue.svg?style=for-the-badge" alt="License: Apache-2.0 OR MIT" height="28" /></a>
   <a href="go.mod"><img src="https://img.shields.io/badge/go-1.26-93450a.svg?style=for-the-badge&logo=go" alt="Go 1.26" height="28" /></a>
+  <a href="https://www.bestpractices.dev/projects/15837"><img src="https://www.bestpractices.dev/projects/15837/badge" alt="OpenSSF Best Practices" height="28" /></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/sebastienrousseau/dot-top"><img src="https://api.scorecard.dev/projects/github.com/sebastienrousseau/dot-top/badge" alt="OpenSSF Scorecard" height="28" /></a>
 </p>
 
 > **Pre-release: not usable yet (foundation only).** This repository holds
@@ -35,7 +37,12 @@ No release exists yet. Build from source:
 
 ```bash
 make build        # CGO_ENABLED=0; writes bin/dot-top
+make install      # to /usr/local/bin; honours PREFIX and DESTDIR
+make uninstall    # removes it again
 ```
+
+`make build DEBUG=1` keeps debugging symbols; `make repro` builds twice and
+checks the binaries are identical.
 
 ---
 
@@ -114,7 +121,8 @@ no telemetry. It is pure Go with cgo disabled.
 
 - User manual: not written yet (pre-release).
 - API reference: [pkg.go.dev](https://pkg.go.dev/github.com/sebastienrousseau/dot-top) once the module is published.
-- Developer docs: [`DEVELOPMENT.md`](DEVELOPMENT.md) and [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+- Developer docs: [`DEVELOPMENT.md`](DEVELOPMENT.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and the security assurance case, [`docs/ASSURANCE.md`](docs/ASSURANCE.md).
+- Project: [`ROADMAP.md`](ROADMAP.md), [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md). Report bugs and ideas in [GitHub issues](https://github.com/sebastienrousseau/dot-top/issues).
 - Family map: [dotfiles](https://github.com/sebastienrousseau/dotfiles), ADR-020 (command names) and ADR-021 (lockstep version).
 
 ---

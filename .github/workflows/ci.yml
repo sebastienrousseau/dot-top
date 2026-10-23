@@ -51,11 +51,29 @@ jobs:
           CGO_ENABLED: "0"
         run: go build ./...
 
-      # TODO(sha): golangci/golangci-lint-action is not pinned anywhere in the
-      # dotfiles workflows, so there is no vetted SHA to copy. Until one is
-      # pinned, install the linter at a fixed version the way the dotfiles
-      # dot-ui and cockpit workflows do.
+      # The linter is installed at a fixed version with `go install` rather
+      # than through golangci-lint-action, the way the dotfiles dot-ui and
+      # cockpit workflows do: the module proxy's checksum database pins it.
       - name: golangci-lint
         run: |
           go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13.2
           "$(go env GOPATH)/bin/golangci-lint" run ./...
+
+  govulncheck:
+    name: govulncheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Harden runner (audit mode)
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+      - name: govulncheck
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...

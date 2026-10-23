@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# Copyright (c) 2026 Sebastien Rousseau
+#
+# Weekly updates for the workflow actions and the Go module, grouped like
+# the dotfiles repo: minor and patch bumps together, majors on their own.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    commit-message:
+      prefix: "ci"
+    open-pull-requests-limit: 10
+    groups:
+      github-actions-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      github-actions-major:
+        patterns: ["*"]
+        update-types: ["major"]
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:15"
+      timezone: "UTC"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 10
+    groups:
+      gomod-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]

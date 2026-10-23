@@ -10,6 +10,12 @@ the dot family version.
 
 ### Added
 
+- `make install` and `make uninstall` (honouring `PREFIX` and `DESTDIR`),
+  `make build DEBUG=1` to keep symbols, and `make repro`, which CI runs to
+  require bit-for-bit identical builds.
+- `GOVERNANCE.md`, `ROADMAP.md`, `docs/ASSURANCE.md` (security assurance
+  case), a code review section in `CONTRIBUTING.md`, and REUSE licence
+  texts under `LICENSES/`.
 - `internal/store`: fixed-capacity sample ring buffer with zero-allocation
   push.
 - `internal/collect`: `Collector` interface, capabilities with reasons,
